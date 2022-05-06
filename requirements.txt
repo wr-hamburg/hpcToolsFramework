@@ -1,0 +1,7 @@
+flask
+fpdf
+os
+parallel-ssh
+pyyaml
+re
+zmq

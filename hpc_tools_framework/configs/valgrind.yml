@@ -1,0 +1,65 @@
+#todo fix mpi implementation of mpirun and darshan to run this
+title: 'Valgrind'
+fulltitle: 'Valgrind'
+url: 'https://valgrind.org/'
+name: 'valgrind' #not with spack but with apt
+description: 'TAU Performance System® is a portable profiling and tracing toolkit for performance analysis of parallel programs written in Fortran, C, C++, UPC, Java, Python. TAU (Tuning and Analysis Utilities) is capable of gathering performance information through instrumentation of functions, methods, basic blocks, and statements as well as event-based sampling.'
+compiler:
+   cflags:
+      - '-g'
+   compiler_level: 'O1'
+job:
+   post_mpi_command:
+      - 'valgrind'
+      - '--leak-check=yes'
+      - '-v'
+installation: ~
+output: ~
+settings:
+  - name: 'massif'
+    type: 'Bool'
+    description: 'Massif is a heap profiler. It measures how much heap memory your program uses. This includes both the useful space, and the extra bytes allocated for book-keeping and alignment purposes. It can also measure the size of your programs stack(s), although it does not do so by default.'
+    compiler:
+      cflags:
+        - '-g'
+      compiler_level: 'O3'
+    job:
+      post_mpi_command:
+        - 'valgrind'
+        - '--tool=massif' #open with ms_print massif.out.xxxx
+  - name: 'massif_stack'
+    type: 'Bool'
+    description: 'Profile the stack with the valgrind massif tool. This might be very harmfull to your performance.'
+    compiler:
+      cflags:
+        - '-g'
+      compiler_level: 'O3'
+    job:
+      post_mpi_command:
+        - 'valgrind'
+        - '--tool=massif'
+        - '–stacks=yes'
+
+  - name: 'callgrind'
+    type: 'Bool'
+    description: 'Callgrind is a profiling tool that records the call history among functions in a programs run as a call-graph. By default, the collected data consists of the number of instructions executed, their relationship to source lines, the caller/callee relationship between functions, and the numbers of such calls.'
+    compiler:
+      cflags:
+        - '-g'
+      compiler_level: 'O3'
+      job:
+        post_mpi_command:
+          - 'valgrind'
+          - '--tool=callgrind' #open with callgrind_annotate callgrind.out.xxxx
+
+  - name: 'cachegrind'
+    type: 'Bool'
+    description: 'Cachegrind simulates how your program interacts with a machines cache hierarchy and (optionally) branch predictor.'
+    compiler:
+      cflags:
+        - '-g'
+      compiler_level: 'O3'
+      job:
+        post_mpi_command:
+          - 'valgrind'
+          - '--tool=cachgrind' #open with cg_annotate FILE_NAME

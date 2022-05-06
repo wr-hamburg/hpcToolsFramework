@@ -1,0 +1,44 @@
+#todo fix mpi implementation of mpirun and darshan to run this
+title: 'Darshan'
+fulltitle: 'Darshan'
+url: 'https://www.mcs.anl.gov/research/projects/darshan/'
+name: 'darshan-runtime'
+description: 'Darshan is an HPC I/O characterization tool. It is designed to capture an accurate picture of application I/O behavior, including properties such as patterns of access within files, with minimum overhead. Darshan can be used to investigate and tune the I/O behavior of complex HPC applications. In addition, Darshan’s lightweight design makes it suitable for full time deployment for workload characterization of large systems. It is hoped that these studies will help the storage research community better serve the needs of scientific computing.'
+compiler: ~
+job: ~
+installation: ~
+output: ~
+settings:
+  - name: 'runtime_instrumentation'
+    type: 'Bool'
+    description: 'Instrument the programm at runtime.'
+    job:
+      single_env_variables:
+        - name: 'DXT_ENABLE_IO_TRACE'
+          value: '§home/lib/libdarshan.so'
+        - name: 'LD_PRELOAD'
+          value: 1
+
+  - name: 'tracing_runtime_instrumentation'
+    type: 'Bool'
+    description: 'Instrument the programm at runtime.' 
+
+    job:
+      single_env_variables:
+        - name: 'DXT_ENABLE_IO_TRACE'
+          value: '§home/lib/libdarshan.so'      
+        - name: 'DXT_ENABLE_IO_TRACE'
+          value: 1
+
+#todo before to compilation create a wrapper with darshan-gen-cc.pl Path_to_mpi_implementation –output wrapper.darshan 
+  - name: 'compile_time_instrumentation'
+    type: 'Bool'
+    description: 'Instrument the programm at runtime.' 
+    job:
+      single_env_variables:
+        - name: 'DXT_ENABLE_IO_TRACE'
+          value: '§home/lib/libdarshan.so'      
+        - name: 'DXT_ENABLE_IO_TRACE'
+          value: 1     
+    compiler:
+      compiler: './wrapper.darshan'

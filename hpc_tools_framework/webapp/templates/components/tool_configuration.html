@@ -1,0 +1,113 @@
+<label>Tools</label>
+<select name="tools" class="form-control selectpicker" data-live-search="true" multiple>
+    {% for tool in tools %}
+    <option value="{{tool.title}}">{{tool.title}}</option>
+    {% endfor %}
+</select>
+<br /><br />
+
+
+<label>Tool Configurations</label>
+<div class="sidebar-nav tools-configs-block">
+    <div class="nav">
+        <ul class="tool-config-ul">
+            {% for tool in tools %}
+            <li class="tool-item main-header">
+                <a href="#" class="sidebar-nav-ul-li-a">{{tool.title}}</a>
+                <a class="menu-toggle sidebar-nav-ul-li-a" href="#">
+                    <i class="caret"></i>
+                </a>
+                <ul class="sub-menu sub-menu-tool-configs">
+                    <p class="info-header">Info</p>
+                    <p class="fulltitle-text">Full title:</p>
+                    <p class="info-header-fulltitle">{{tool.fulltitle}}</p>
+                    <p class="tool-configs-description">{{tool.description}}</p>
+                    <a role="button" href="{{tool.url}}" class="btn go-to-tool-button btn-primary">Open tool website</a>
+                    <p class="einstellungen-header-settings">Settings</p>
+
+                    {% for setting in tool['settings'] %}
+                    {% if setting.type.value == 0 %}
+                    <!-- Bool -->
+                    <div class="checkbox">
+                        <label class="checkbox-block"><span class="flag-span-first">
+                            <input type="checkbox" value=""
+                                    name={{tool.name}}-{{setting.name}} />
+                                {{setting.name}}
+                            </span>
+                            <div class="description-block">
+                                <span class="description">{{setting.description}}</span>
+                            </div>
+                        </label>
+                    </div>
+                    {% endif %}
+                    {% if setting.type.value == 1 %}
+                    <!-- Textinput -->
+                    <div class="form-group number-input-form-group">
+                        <div class="number-input-block-part">
+                            <p>{{setting.name}}</p>
+                            <input type="text" class="form-control setting-name-general-input" name={{tool.name}}-{{setting.name}} />
+                        </div>
+                         <div class="description-block">
+                            <span class="description">{{setting.description}}</span>
+                        </div> 
+                    </div>
+
+                    {% endif %}
+                    {% if setting.type.value == 2 %}
+                    <!-- Numberinput -->
+
+                    <div class="form-group number-input-form-group">
+                        <div class="number-input-block-part">
+                            <p class="numper-input-block-part-p">{{setting.name}}</p>
+                            <input type="number" class="form-control  setting-name-general-input" name={{tool.name}}-{{setting.name}} />
+                        </div>
+                        <div class="description-block">
+                            <span class="description">{{setting.description}}</span>
+                        </div>
+                    </div>
+
+                    {% endif %}
+                    {% if setting.type.value == 3 %}
+                    <!-- Setinput -->
+                    <div class="form-group setinput-form-group">
+                    <div class="number-input-block-part">
+                    <p class="einstellungen-header">{{setting.name}}</p>
+
+                    <select name={{tool.name}}-{{setting.name}} class="form-control selectpicker  setting-name-general-input"
+                        data-live-search="true" multiple>
+                        {% for value in setting['values'] %}
+                        <option value="{{value}}">{{value}}</option>
+                        {% endfor %}
+                    </select>
+                    </div>
+                    <div class="description-block">
+                        <span class="description">{{setting.description}}</span>
+                    </div>
+                    </div>
+                    {% endif %}
+                    {% if setting.type.value == 4 %}
+                    <!-- File -->
+                    <div class="form-group number-input-form-group">
+                        <div class="number-input-block-part">
+                    <p class="einstellungen-header">{{setting.name}}</p>
+                    <select
+                    name={{setting.name}}
+                    class="form-control selectpicker  setting-select-general-input"
+                  >
+                    {% for file in input_files %}
+                    <option value="{{file}}">{{file}}</option>
+                    {% endfor %}
+                  </select>
+                    </div>
+                  <div class="description-block">
+                    <span class="description">{{setting.description}}</span>
+                </div>
+                  </div>
+                    {% endif %} 
+                    {% endfor %}
+                </ul>
+            </li>
+            {% endfor %}
+        </ul>
+    </div>
+</div>

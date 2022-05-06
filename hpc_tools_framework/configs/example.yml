@@ -1,0 +1,48 @@
+title: Dummy
+fulltitle: ~
+url: ~
+name: dummy
+type: bool
+description: TBD
+installation:
+  version: 1.1.1
+  flags:
+    - name: flag1
+      value: moduleExample
+      prefix: +
+      suffix: 1.2.3
+compiler:
+  compiler: scorep mpicc
+  cflags:
+    - flag1
+  libs:
+    - lmvv
+  include_link: path/x/y/z
+  library_link: path/x/y/z
+  compiler_level: O2
+job:
+  single_env_variables:
+    - name: SCOREP_ENABLE_PROFILING
+      value: true
+  listed_env_variables:
+    - name: listed_var1
+      values:
+        - a
+        - b
+        - c
+      separator: ","
+  pre_mpi_command:
+    - pre1
+    - pre2
+    - pre3
+  post_mpi_command:
+    - post1
+    - post2
+    - post3
+  post_binary_flags:
+    - postbin1
+    - postbin2
+    - postbin3
+  cp: Path/a/b/c
+  source: Path/a/b/c
+settings: ~

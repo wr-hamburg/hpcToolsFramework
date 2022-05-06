@@ -1,0 +1,406 @@
+body {
+  background-color: #f5f5f5;
+}
+
+.tools-list {
+  padding-left: 0;
+}
+
+.darshan-text {
+  padding-right: 10px;
+}
+
+.tool-item-form {
+  max-height: 14px;
+  margin-bottom: 10px;
+}
+
+.checkbox-menu li label {
+  display: block;
+  padding: 3px 10px;
+  clear: both;
+  font-weight: normal;
+  line-height: 1.42857143;
+  color: #333;
+  white-space: nowrap;
+  margin: 0;
+  transition: background-color 0.4s ease;
+}
+
+.fa-check {
+  margin-top: 3px;
+  display: none;
+}
+
+.einstellungen-header {
+  font-weight: bold;
+  font-size: 15px;
+}
+
+.info-header {
+  font-weight: bold;
+  font-size: 15px;
+}
+
+.info-header-fulltitle {
+  font-weight: bold;
+  font-size: 15px;
+  display: inline-block;
+}
+
+.fulltitle-text {
+  display: inline-block;
+}
+
+.checkbox-menu li input {
+  margin: 0px 5px;
+  top: 2px;
+  position: relative;
+}
+
+.list-group-jobs-item {
+  display: flex;
+  justify-content: space-between;
+  padding: 10px 15px;
+  margin-bottom: -1px;
+  width: 100%;
+  background-color: #fff;
+  border: 1px solid #ddd;
+}
+
+.list-group-jobs-main-item {
+  display: block;
+  width: 100%;
+  background-color: #fff;
+}
+
+.list-group-jobs-subitem {
+  width: 100%;
+  max-width: 100%;
+  margin-left: 10px;
+  text-align: center;
+} 
+
+.list-group-jobs-subitem-download {
+  width: 16px;
+  height: 16px;
+}
+
+.list-group-jobs-subitem-header {
+  font-size: 14px;
+  font-weight: bold;
+}
+
+.a-list-group-jobs-subitem-download-not-visible {
+  min-width: 36px;
+  visibility: hidden;
+}
+
+.a-list-group-jobs-subitem-download-not-visible-none {
+  min-width: 36px;
+  display: block;
+}
+
+
+.list-group-jobs-subitem-download-not-visible {
+  display: none;
+  width: 16px;
+  height: 16px;
+}
+
+.checkbox-menu li.active label {
+  background-color: #cbcbff;
+  font-weight: bold;
+}
+
+.checkbox-menu li label:hover,
+.checkbox-menu li label:focus {
+  background-color: #f5f5f5;
+}
+
+.checkbox-menu li.active label:hover,
+.checkbox-menu li.active label:focus {
+  background-color: #b8b8ff;
+}
+
+.tool-item-button {
+  min-width: 30px;
+}
+
+.tool-item {
+  margin-bottom: 10px;
+}
+
+.sidebar-nav {
+  background-color: #ffffff;
+}
+
+.sub-menu-tool-configs {
+  padding-left: 10px !important;
+}
+
+.sidebar-nav-second {
+  background-color: #ffffff;
+}
+.sidebar-nav h4 {
+  color: #e4173e;
+  font-family: "Roboto Condensed", sans-serif;
+  text-transform: uppercase;
+  font-size: 20px;
+  text-align: left;
+  line-height: 40px;
+}
+.sidebar-nav ul {
+  list-style-type: none;
+}
+.sidebar-nav ul .main-header {
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  padding-left: 12px;
+  position: relative;
+  width: 100%;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  -webkit-user-select: none;
+}
+.sidebar-nav-second ul li a {
+  color: rgba(0, 0, 0, 0.701961);
+  padding: 6px 0;
+  display: inline-block;
+  width: 100%;
+  padding: 6px 12px;
+}
+
+.sidebar-nav-ul-li-a {
+  color: rgba(0, 0, 0, 0.701961);
+  padding: 6px 0;
+  display: inline-block;
+}
+
+.sidebar-nav ul li a:hover {
+  text-decoration: none;
+  border-bottom: 0;
+}
+.sidebar-nav ul li.selected a {
+  color: #004c84;
+  font-weight: bold;
+  display: block;
+}
+.sidebar-nav ul li a.menu-toggle {
+  position: relative;
+  width: 35px;
+  text-align: center;
+  border-bottom: 0;
+  vertical-align: top;
+  position: absolute;
+  right: 0;
+}
+.sidebar-nav ul li a.menu-toggle:after {
+  position: relative;
+  right: 0;
+  text-align: middle;
+  font-family: FontAwesome;
+  font-size: 12px;
+  content: "";
+}
+.sidebar-nav ul li a.menu-toggle:focus,
+.sidebar-nav ul li a.menu-toggle:hover,
+.sidebar-nav ul li a.menu-toggle:visited,
+.sidebar-nav ul li a.menu-toggle:link {
+  border-bottom: 0;
+  text-decoration: none;
+}
+.sidebar-nav ul li a.menu-toggle.rotate {
+  transform: rotate(180deg);
+  /* right: 1px; */
+}
+.sidebar-nav ul.sub-menu {
+  display: none;
+  font-size: 14px;
+}
+.sidebar-nav ul.sub-menu li {
+  position: relative;
+}
+.sidebar-nav ul.sub-menu li .text {
+  position: relative;
+  padding-left: 20px !important;
+}
+
+.caret {
+  margin-left: 0 !important;
+}
+
+.link1-darshan {
+  padding-right: 8px;
+}
+
+.checkbox-block {
+  display: flex;
+  justify-content: space-between;
+  padding-right: 15px;
+}
+
+.checkbox-block .description {
+  text-align: left;
+}
+
+.subdropdown-block {
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  max-width: 200px;
+  margin-bottom: 10px;
+}
+
+.job-conf-main-block {
+  padding-left: 10px;
+  padding-right: 20px;
+  margin-top: 10px;
+}
+
+.job-block {
+  border-radius: 4px;
+  margin-bottom: 20px;
+}
+
+.tools-configs-block {
+  padding-left: 10px;
+  padding-right: 10px;
+}
+
+.tool-config-ul {
+  padding-top: 10px;
+  padding-left: 0;
+  border-radius: 4px;
+}
+
+.dropdown-menu {
+  position: relative !important;
+  top: 0 !important;
+}
+
+.dropdown-menu li a {
+  width: 100% !important;
+}
+.form-control {
+  height: auto !important;
+}
+.header-items {
+  display: flex;
+  justify-content: space-between;
+}
+
+.description-block {
+  text-align: left;
+  max-width: 200px;
+  min-width: 200px;
+}
+
+.set-string-form-configs {
+  padding-right: 15px;
+}
+
+.submit-button-block {
+  text-align: center;
+  margin-bottom: 50px;
+  margin-top: 50px;
+}
+
+.submit-button {
+  width: 200px;
+  height: 50px;
+}
+
+.einstellungen-form-block {
+  padding-right: 15px;
+}
+
+.go-to-tool-button {
+  margin-bottom: 10px;
+}
+
+.main-job-block {
+  padding-left: 10%;
+  padding-right: 10%;
+}
+
+.logout-icon {
+  width: 30px;
+  height: 30px;
+  float: right;
+  margin-top: 10px;
+  cursor: pointer;
+}
+
+.multi-ripple {
+  width: 80px;
+  height: 80px;
+  margin: 0 auto;
+  margin-top: 30px;
+  position: relative;
+}
+
+@-webkit-keyframes ripple {
+  from {
+    transform: scale(0);
+    opacity: 1;
+  }
+  to {
+    transform: scale(1);
+    opacity: 0;
+  }
+}
+
+@keyframes ripple {
+  from {
+    transform: scale(0);
+    opacity: 1;
+  }
+  to {
+    transform: scale(1);
+    opacity: 0;
+  }
+}
+
+.multi-ripple div {
+  position: absolute;
+  width: 40px;
+  height: 40px;
+  left: 20px;
+  top: 20px;
+  border-radius: 50%;
+  border: 0.3rem solid black;
+  -webkit-animation: 1.5s ripple infinite;
+          animation: 1.5s ripple infinite;
+}
+.multi-ripple div:nth-child(2) {
+  -webkit-animation-delay: 0.5s;
+          animation-delay: 0.5s;
+}
+
+
+@media only screen and (max-width: 992px) {
+  .description-block {
+    text-align: left;
+    max-width: 400px;
+    min-width: 400px;
+  }
+}
+
+@media only screen and (max-width: 767px) {
+  .logout-icon {
+    position:absolute;
+    top: 0;
+    right: 10px;
+  }
+}
+
+
+@media only screen and (max-width: 295px) {
+.logout-icon {
+  position:relative;
+  float: left;
+  left: 2px;
+  margin-bottom: 10px;
+}
+}

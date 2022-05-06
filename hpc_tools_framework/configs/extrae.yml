@@ -1,0 +1,109 @@
+title: 'Extrae'
+fulltitle: 'Extrae'
+url: 'https://tools.bsc.es/extrae'
+name: 'extrae'
+description: 'Extrae is the package devoted to generate Paraver trace-files for a post-mortem analysis. Extrae is a tool that uses different interposition mechanisms to inject probes into the target application so as to gather information regarding the application performance.'
+compiler: ~
+job: ~ #assuming the default extrae coinfig in the examples folder of the tool is modified
+installation: ~ #todo test DynInst, might work with DynInst now
+output: ~
+settings:
+  - name: 'sequential_sampling'
+    type: 'Bool'
+    description: 'Sample a sequential programm.'
+    job:
+      single_env_variables:
+        - name: 'EXTRAE_HOME'
+          value: '§home'
+        - name: 'EXTRAE_CONFIG_FILE'
+          value: 'extrae.xml'
+        - name:  'LD_PRELOAD'
+          value: '${EXTRAE_HOME}/lib/libseqtrace.so'
+      source: '${EXTRAE_HOME}/etc/extrae.sh'
+      cp: '${EXTRAE_HOME}/share/example/SEQ/extrae.xml .' 
+
+  - name: 'mpi_sampling'
+    type: 'Bool'
+    description: 'Sample a program which uses MPI'
+    job:
+      single_env_variables:
+        - name: 'EXTRAE_HOME'
+          value: '§home'
+        - name: 'EXTRAE_CONFIG_FILE'
+          value: 'extrae.xml'
+        - name:  'LD_PRELOAD'
+          value: '${EXTRAE_HOME}/lib/libmpitrace.so'
+      source: '${EXTRAE_HOME}/etc/extrae.sh'
+      cp: '${EXTRAE_HOME}/share/example/MPI/extrae.xml .'
+
+  - name: 'omp_sampling'
+    type: 'Bool'
+    description: 'Sample a program which uses OMP'
+    job:
+      single_env_variables:
+        - name: 'EXTRAE_HOME'
+          value: '§home'
+        - name: 'EXTRAE_CONFIG_FILE'
+          value: 'extrae.xml'
+        - name:  'LD_PRELOAD'
+          value: '${EXTRAE_HOME}/lib/libomptrace.so'
+      source: '${EXTRAE_HOME}/etc/extrae.sh'
+      cp: '${EXTRAE_HOME}/share/example/OMP/extrae.xml .'
+
+  - name: 'ompmpi_sampling'
+    type: 'Bool'
+    description: 'Sample a hybrid program which uses OMP und MPI'
+    job:
+      single_env_variables:
+        - name: 'EXTRAE_HOME'
+          value: '§home'
+        - name: 'EXTRAE_CONFIG_FILE'
+          value: 'extrae.xml'
+        - name:  'LD_PRELOAD'
+          value: '${EXTRAE_HOME}/lib/libompitrace.so'
+      source: '${EXTRAE_HOME}/etc/extrae.sh'
+      cp: '${EXTRAE_HOME}/share/example/MPI+OMP/extrae.xml .' 
+      
+  
+#  - name: 'cuda_sampling'
+#    type: 'bool'
+#    description: 'Sample a hybrid program which uses OMP und MPI'
+#    job:
+#      single_env_variables:
+#        - name: 'EXTRAE_HOME'
+#          value: '§home'
+#        - name: 'EXTRAE_CONFIG_FILE'
+#          value: 'extrae.xml'
+#        - name:  'LD_PRELOAD'
+#          value: '${EXTRAE_HOME}/lib/libcudatrace.so'
+#      source: '${EXTRAE_HOME}/etc/extrae.sh'
+#      cp: '${EXTRAE_HOME}/share/example/MPI+OMP/extrae.xml .'  # correct this path
+
+  - name: 'pthread_sampling'
+    type: 'Bool'
+    description: 'Sample a program which uses Pthreads'
+    job:
+      single_env_variables:
+        - name: 'EXTRAE_HOME'
+          value: '§home'
+        - name: 'EXTRAE_CONFIG_FILE'
+          value: 'extrae.xml'
+        - name:  'LD_PRELOAD'
+          value: '${EXTRAE_HOME}/lib/libpttrace.so'
+      source: '${EXTRAE_HOME}/etc/extrae.sh'
+      cp: '${EXTRAE_HOME}/share/example/PTHREAD/extrae.xml .'
+
+#  - name: 'opencl_sampling'
+#    type: 'bool'
+#    description: 'Sample a program which uses OpenCL'
+#    job:
+#      single_env_variables:
+#        - name: 'EXTRAE_HOME'
+#          value: '§home'
+#        - name: 'EXTRAE_CONFIG_FILE'
+#          value: 'extrae.xml'
+#        - name:  'LD_PRELOAD'
+#          value: '${EXTRAE_HOME}/lib/libocltrace.so'
+#      source: '${EXTRAE_HOME}/etc/extrae.sh'
+#      cp: '${EXTRAE_HOME}/share/example/MPI+OMP/extrae.xml .' # correct this path
+

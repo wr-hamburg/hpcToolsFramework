@@ -1,0 +1,19 @@
+title: 'Gprof'
+fulltitle: 'Gprof'
+url: 'https://www.lrz.de/services/compute/supermuc/tuning/gprof/' #change
+name: 'gprof' #not with spack already installed
+description: ~
+compiler:
+  compiler: 'gcc' #can user it parallel except for this hack https://www.lrz.de/services/compute/supermuc/tuning/gprof/ which need to be further investiagted
+  cflags:
+      - '-pg'
+  compiler_level: 'O0'
+job: ~
+installation: ~
+output: ~
+settings : #no further settings
+  - name: ~
+    type: 'Bool'
+    description: ~
+
+#open ouput with gprof partdiff gmon.out > AUSGABE_DATEINAME.txt

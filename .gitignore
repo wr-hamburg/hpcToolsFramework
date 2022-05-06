@@ -1,0 +1,15 @@
+# python artefacts
+dist/
+*.egg-info
+__pycache__/
+*.py[cod]
+*$py.class
+/.pytest_cache/
+
+# virtualenv
+.venv
+venv/
+ENV/
+
+# pycharm
+.idea/

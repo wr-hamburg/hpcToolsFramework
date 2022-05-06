@@ -1,0 +1,273 @@
+title: "Likwid"
+fulltitle: "Like I Knew What I Am Doing"
+url: "https://github.com/RRZE-HPC/likwid"
+name: "likwid"
+description: "Likwid is a simple to install and use toolsuite of command line applications and a library for performance oriented programmers."
+compiler: ~
+job: ~
+installation: ~
+output:
+  type: "Jobscript_Output"
+
+settings:
+  ##Likwid-perfctr
+
+  - name: "threads_socket"
+    type: "Textinput" 
+    description: "Get the logical kernels on which the events should be measured on the sockets. Please look at the LIKWID syntax"
+    job:
+      post_mpi_command:
+        - "likwid-perfctr"
+        - "-C S§input"
+
+  - name: "threads_node"
+    type: "Textinput" 
+    description: "Get the logical kernels on which the events should be measured on the nodes"
+    job:
+      post_mpi_command:
+        - "likwid-perfctr"
+        - "-C N§input"
+
+  - name: "threds_NUMA"
+    type: "Textinput" 
+    description: "Get the logical kernels on which the events should be measured on the NUMA Domains"
+    job:
+      post_mpi_command:
+        - "likwid-perfctr"
+        - "-C M§input"
+  - name: "threads_outer_cache"
+    type: "Textinput" 
+    description: "Get the logical kernels on which the events should be measured on outer Cache Level"
+    job:
+      post_mpi_command:
+        - "likwid-perfctr"
+        - "-C C§input"
+
+  - name: "l2_cache_events"
+    type: "Bool"
+    description: "Level 2 Cache Event Group"
+    job:
+      post_mpi_command:
+        - "likwid-perfctr "
+        - "-g"
+        - "L2"
+  - name: "l3_cache_events"
+    type: "Bool"
+    description: "Level 3 Cache Event Group"
+    job:
+      post_mpi_command:
+        - "likwid-perfctr"
+        - "-g"
+        - "L3"
+  - name: "memory_events"
+    type: "Bool"
+    description: "Memory Event Group"
+    job:
+      post_mpi_command:
+        - "likwid-perfctr"
+        - "-g"
+        - "MEM"
+  - name: "branch_events"
+    type: "Bool"
+    description: "Branch Event Group"
+    job:
+      post_mpi_command:
+        - "likwid-perfctr"
+        - "-g"
+        - "BRANCH"
+
+  - name: "divide_unit_information"
+    type: "Bool"
+    description: "Divide Unit Information"
+    job:
+      post_mpi_command:
+        - "likwid-perfctr"
+        - "-g"
+        - "DIVIDE"
+  - name: "divide_unit_information"
+    type: "Bool"
+    description: "Divide Unit Information"
+    job:
+      post_mpi_command:
+        - "likwid-perfctr"
+        - "-g"
+        - "DIVIDE"
+  - name: "memory_bandwith"
+    type: "Bool"
+    description: "Memory Bandwith in MBit/s"
+    job:
+      post_mpi_command:
+        - "likwid-perfctr"
+        - "-g"
+        - "MEM_SP"
+  - name: "l1_tlb"
+    type: "Bool"
+    description: "L1 Instruction TLB Miss Ratio"
+    job:
+      post_mpi_command:
+        - "likwid-perfctr"
+        - "-g"
+        - "TLB_INSTR"
+  - name: "view"
+    type: "Bool"
+    description: "Overview of arethmetic and memory performance"
+    job:
+      post_mpi_command:
+        - "likwid-perfctr "
+        - "-g"
+        - "VIEW"
+  - name: "tlb_data"
+    type: "Bool"
+    description: "L2 data/TLB miss ratio"
+    job:
+      post_mpi_command:
+        - "likwid-perfctr"
+        - "-g"
+        - "TLB_DATA"
+  - name: "sp_flops"
+    type: "Bool"
+    description: "Single Precision Floating Point Operations Per Second"
+    job:
+      post_mpi_command:
+        - "likwid-perfctr "
+        - "-g"
+        - "FLOPS_SP"
+  - name: "dp_flops"
+    type: "Bool"
+    description: "Double Precision Floating Point Operations Per Second"
+    job:
+      post_mpi_command:
+        - "likwid-perfctr"
+        - "-g"
+        - "FLOPS_DP"
+  - name: "clock"
+    type: "Bool"
+    description: "CPU Clock Information"
+    job:
+      post_mpi_command:
+        - "likwid-perfctr"
+        - "-g"
+        - "CLOCK"
+  - name: "icache"
+    type: "Bool"
+    description: "Instruction Cache Event Group"
+    job:
+      post_mpi_command:
+        - "likwid-perfctr"
+        - "-g"
+        - "ICACHE"
+  - name: "uops"
+    type: "Bool"
+    description: "UOPS execution"
+    job:
+      post_mpi_command:
+        - "likwid-perfctr"
+        - "-g"
+        - "UOPS"
+
+  - name: "data"
+    type: "Bool"
+    description: "Data Event Group"
+    job:
+      post_mpi_command:
+        - "likwid-perfctr"
+        - "-g"
+        - "DATA"
+  - name: "cache"
+    type: "Bool"
+    description: "Cache Event Group"
+    job:
+      post_mpi_command:
+        - "likwid-perfctr"
+        - "-g"
+        - "CACHE"
+  - name: "mem_dp"
+    type: "Bool"
+    description: "Main memory bandwith in Mbit/s"
+    job:
+      post_mpi_command:
+        - "likwid-perfctr"
+        - "-g"
+        - "MEM_DP"
+
+  - name: "API"
+    type: "Bool"
+    description: "Use the Likwid Marker API. The API has the be integrated in the programm before hand."
+    job:
+      post_mpi_command:
+        - "likwid-perfctr"
+        - "-m"
+    compiler:
+      cflags:
+        - "-DLIKWID_PERFMON"
+      libs:
+        - "-llikwid"
+        - -'lm'
+      include_link: "§home/include"
+      library_link: "§home/lib"
+      compiler_level: "O2"
+
+  ##Likwid topology
+  - name: "topology"
+    type: "Bool"
+    description: "See the topology on a node"
+    compiler:
+    job:
+      post_mpi_command:
+        - "likwid-topology"
+  - name: "topology_simplified"
+    type: "Bool"
+    description: S'ee the topology on a node in a simplified version'
+    compiler:
+    job:
+      post_mpi_command:
+        - "likwid-topology"
+        - "-O"
+  - name: "topology_graphic"
+    type: "Bool"
+    description: "See the topology on a node in a graphified version"
+    compiler:
+    job:
+      post_mpi_command:
+        - "likwid-topology"
+        - "-g"
+  - name: "topology_graphic"
+    type: "Bool"
+    description: "See the topology on a node in a graphified version"
+    compiler:
+    job:
+      post_mpi_command:
+        - "likwid-topology"
+        - "-g"
+  #likwid-pin
+  - name: "pin_socket"
+    type: "Textinput" 
+    description: "Pin the logical kernels on which the events should be measured on the sockets"
+    job:
+      post_mpi_command:
+        - "likwid-pin"
+        - "-C S§input"
+
+  - name: "pin_node"
+    type: "Textinput" 
+    description: "Pin the logical kernels on which the events should be measured on the nodes"
+    job:
+      post_mpi_command:
+        - "likwid-pin"
+        - "-C N§input"
+
+  - name: "pin_NUMA"
+    type: "Textinput" 
+    description: "Pin the logical kernels on which the events should be measured on the NUMA Domains"
+    job:
+      post_mpi_command:
+        - "likwid-pin "
+        - "-C M§input"
+
+  - name: "pin_outer_cache"
+    type: "Textinput" 
+    description: "Pin the logical kernels on which the events should be measured on outer Cache Level"
+    job:
+      post_mpi_command:
+        - "likwid-pin"
+        - "-C C§input"

@@ -1,0 +1,198 @@
+title: "VTune"
+fulltitle: "Intel VTune Amplifier"
+url: "https://www.intel.com/content/www/us/en/developer/tools/oneapi/vtune-profiler.html#gs.ov7524"
+name: "intel-oneapi-vtune" #might wont work beacuse you need license key
+description: "Find and Fix Performance Bottlenecks Quickly and Realize All the Value of Your Hardware. Intel VTune Profiler optimizes application performance, system performance, and system configuration for HPC, cloud, IoT, media, storage, and more."
+installation: ~
+compiler:
+  cflags:
+    - "g"
+  compiler_level: "O3"
+job:
+  post_mpi_command:
+    - "vtune"
+output:
+  type: "Jobscript_Output"
+settings:
+  - name: "hotspots" #Unfourtunally only this setting will work on our UHH cluster
+    type: "Bool"
+    description: "Analyse where the programm takes the most time"
+    job:
+      post_mpi_command:
+        - "vtune"
+        - "-c"
+        - "hotspots"
+        - "-r"
+        - "vtune-results --"
+  - name: "advanced_hotspots"
+    type: "Bool"
+    description: "As before but uses the VTune Amplifier kernel driver to extend the hotspot analysis by collecting call stacks, context switches and statistical call count data as well as analysing the CPI metric (cycles per instruction)."
+    job:
+      post_mpi_command:
+        - "vtune"
+        - "-c"
+        - "advanced-hotspots"
+        - "-r"
+        - "vtune-results --"
+  - name: "concurrency"
+    type: "Bool"
+    description: "Usage of available logical CPUs, discovers where parallelism is incurring synchronisation overhead and identifies potential candidates for parallelisation."
+    job:
+      post_mpi_command:
+        - "vtune"
+        - "-c"
+        - "concurrency"
+        - "-r"
+        - "vtune-results --"
+  - name: "locks_waits"
+    type: "Bool"
+    description: "Dentifies where the application is waiting on synchronisation objects or I/O operations."
+    job:
+      post_mpi_command:
+        - "vtune"
+        - "-c"
+        - "locksandwaits"
+        - "-r"
+        - "vtune-results --"
+
+  - name: "general_exploration"
+    type: "Bool"
+    description: "Uses hardware event-based sampling to analyse general issues affecting the performance of the application."
+    job:
+      post_mpi_command:
+        - "vtune"
+        - "-c"
+        - "general-exploration"
+        - "-r"
+        - "vtune-results --"
+  - name: "memory_access"
+    type: "Bool"
+    description: "Measures a set of metrics to identify memory access related issues."
+    job:
+      post_mpi_command:
+        - "vtune"
+        - "-c"
+        - "memory-access"
+        - "-r"
+        - "vtune-results --"
+
+  - name: "performance_snapshot"
+    type: "Bool"
+    description: "Get an overview of issues that affect application performance on your target system."
+    job:
+      post_mpi_command:
+        - "vtune"
+        - "-c"
+        - "performance-snapshot"
+        - "-r"
+        - "vtune-results --"
+  - name: "anomaly_detection"
+    type: "Bool"
+    description: "Identify performance anomalies in frequently recurring intervals of code like loop iterations. Perform fine-grained analysis at the microsecond level."
+    job:
+      post_mpi_command:
+        - "vtune"
+        - "-c"
+        - "anomaly-detection"
+        - "-r"
+        - "vtune-results --"
+  - name: "threading"
+    type: "Bool"
+    description: "Collect data on how an application is using available logical CPU cores, discover where parallelism is incurring synchronization overhead, identify where an application is waiting on synchronization objects or I/O operations, and discover how waits affect application performance."
+
+    job:
+      post_mpi_command:
+        - "vtune"
+        - "-c"
+        - "threading"
+        - "-r"
+        - "vtune-results --"
+  - name: "Input/Output"
+    type: "Bool"
+    description: "Monitor utilization of the IO subsystems, CPU and processor buses."
+    job:
+      post_mpi_command:
+        - "vtune"
+        - "-c"
+        - "io"
+        - "-r"
+        - "vtune-results --"
+  - name: "HPC_performance"
+    type: "Bool"
+    description: "Identify opportunities to optimize CPU, memory, and FPU utilization for compute-intensive or throughput applications."
+    job:
+      post_mpi_command:
+        - "vtune"
+        - "-c"
+        - "hpc-performance"
+        - "-r"
+        - "vtune-results --"
+  - name: "memory_Consumption"
+    type: "Bool"
+    description: "Analyze memory consumption by your Linux application, its distinct memory objects and their allocation stacks."
+    job:
+      post_mpi_command:
+        - "vtune"
+        - "-c"
+        - "memory-consumption"
+        - "-r"
+        - "vtune-results --"
+  - name: "GPU_offload"
+    type: "Bool"
+    description: "Explore code execution on various CPU and GPU cores on your platform, correlate CPU and GPU activity, and identify whether your application is GPU or CPU bound."
+    job:
+      post_mpi_command:
+        - "vtune"
+        - "-c"
+        - "gpu-offload"
+        - "-r"
+        - "vtune-results --"
+  - name: "GPU"
+    type: "Bool"
+    description: "Identify Graphics Processing Unit (GPU) tasks with high GPU utilization and estimate the effectiveness of this utilization."
+    job:
+      post_mpi_command:
+        - "vtune"
+        - "-c"
+        - "gpu-hotspots"
+        - "-r"
+        - "vtune-results --"
+  - name: "FPGA"
+    type: "Bool"
+    description: "Analyze the CPU/FPGA interaction issues via exploring OpenCL kernels running on FPGA, identify the most time-consuming FPGA kernels."
+    job:
+      post_mpi_command:
+        - "vtune"
+        - "-c"
+        - "fpga-interaction"
+        - "-r"
+        - "vtune-results --"
+  - name: "system_overview"
+    type: "Bool"
+    description: "Monitor a general behavior of your target system and identify platform-level factors that limit performance."
+    job:
+      post_mpi_command:
+        - "vtune"
+        - "-c"
+        - "system-overview"
+        - "-r"
+        - "vtune-results --"
+  - name: "Trace_not_Intel_MPI"
+    type: "Bool"
+    description: "Try this option of you dont use an intel mpi implmentation."
+    job:
+      post_mpi_command:
+        - "vtune"
+        - "-c"
+        - "hotspots"
+        - "-r"
+        - "vtune-results --"
+        - "trace-mpi"
+  - name: "Datalimit"
+    type: "Bool" #'int'
+    description: "Change memory limit for Vtune to work on"
+    job:
+      post_mpi_command:
+        - "vtune"
+        - "-c"
+        - "-data-limit=§input"

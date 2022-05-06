@@ -1,0 +1,261 @@
+<label>Job Configurations</label>
+<br />
+<div class="sidebar-nav-second job-block">
+  <div class="nav">
+    <ul class="job-conf-main-block">
+      <label>Minnodes</label>
+      <div class="info-icon">
+        <img src="../../static/info.svg" />
+        <div class="job-info-box">
+          <span class="job-info-box-text"
+            >The minimum number of compute nodes assigned for this job.</span
+          >
+        </div>
+      </div>
+      <br />
+
+      <div class="form-group">
+        <input
+          name="minnodes"
+          type="number"
+          min="1"
+          oninput="this.value = 
+ !!this.value && Math.abs(this.value) >= 1 ? Math.abs(this.value) : null"
+          class="form-control"
+          value="1"
+        />
+      </div>
+
+      <label>Maxnodes</label>
+      <div class="info-icon">
+        <img src="../../static/info.svg" />
+        <div class="job-info-box">
+          <span class="job-info-box-text"
+            >The maximum number of computing nodes allocated for this job. If no
+            number is specified the minimum number of nodes is used.</span
+          >
+        </div>
+      </div>
+      <br />
+
+      <div class="form-group">
+        <input
+          name="maxnodes"
+          type="number"
+          class="form-control"
+          min="1"
+          oninput="this.value = 
+ !!this.value && Math.abs(this.value) >= 1 ? Math.abs(this.value) : null"
+          placeholder="Enter maxnodes"
+        />
+      </div>
+
+      <label>ntasks</label>
+      <div class="info-icon">
+        <img src="../../static/info.svg" />
+        <div class="job-info-box">
+          <span class="job-info-box-text">The number of tasks.</span>
+        </div>
+      </div>
+      <br />
+
+      <div class="form-group">
+        <input
+          name="ntasks"
+          type="number"
+          min="1"
+          oninput="this.value = 
+ !!this.value && Math.abs(this.value) >= 1 ? Math.abs(this.value) : null"
+          class="form-control"
+          value="1"
+        />
+      </div>
+
+      <label>Partition</label>
+      <div class="info-icon">
+        <img src="../../static/info.svg" />
+        <div class="job-info-box">
+          <span class="job-info-box-text"
+            >Request a specific partition for the resource allocation.</span
+          >
+        </div>
+      </div>
+      <br />
+
+      <select name="partition" class="form-control selectpicker">
+        {% for partition in partitions %}
+        <option value="{{partition}}">{{partition}}</option>
+        {% endfor %}
+      </select>
+      <br /><br />
+
+      <label>Processes</label>
+      <div class="info-icon">
+        <img src="../../static/info.svg" />
+        <div class="job-info-box">
+          <span class="job-info-box-text"
+            >The number of MPI processes to run the program with.</span
+          >
+        </div>
+      </div>
+      <br />
+
+      <div class="form-group">
+        <input
+          type="number"
+          name="processes"
+          class="form-control"
+          min="1"
+          oninput="this.value = 
+ !!this.value && Math.abs(this.value) >= 1 ? Math.abs(this.value) : null"
+          value="1"
+        />
+      </div>
+
+      <label>Memory</label>
+      <div class="info-icon">
+        <img src="../../static/info.svg" />
+        <div class="job-info-box">
+          <span class="job-info-box-text"
+            >Specify the real memory required per node in megabytes. A memory
+            size specification of zero is treated as a special case and grants
+            the job access to all of the memory on each node.
+          </span>
+        </div>
+      </div>
+      <br />
+
+      <div class="form-group">
+        <input
+          type="text"
+          name="memory"
+          class="form-control"
+          placeholder="Enter memory size"
+        />
+      </div>
+
+      <label>Timeout</label>
+      <div class="info-icon">
+        <img src="../../static/info.svg" />
+        <div class="job-info-box">
+          <span class="job-info-box-text"
+            >Set a limit on the total run time of the job allocation. If the
+            requested time limit exceeds the partition's time limit, the job
+            will be left in a PENDING state (possibly indefinitely).</span
+          >
+        </div>
+      </div>
+      <br />
+
+      <div class="form-group">
+        <input
+          type="number"
+          name="timeout"
+          class="form-control"
+          placeholder="Enter timeout in seconds"
+        />
+      </div>
+
+      <label>Mail notifications</label>
+      <div class="info-icon">
+        <img src="../../static/info.svg" />
+        <div class="job-info-box">
+          <span class="job-info-box-text"
+            >User to receive email notification of state changes.</span
+          >
+        </div>
+      </div>
+      <br />
+
+      <select
+        name="mail_notifications"
+        class="form-control selectpicker"
+        multiple
+      >
+        {% for notification in notifications %}
+        <option value="{{notification}}">{{notification}}</option>
+        {% endfor %}
+      </select>
+      <br /><br />
+
+      <label>Deadline</label>
+      <div class="info-icon">
+        <img src="../../static/info.svg" />
+        <div class="job-info-box">
+          <span class="job-info-box-text"
+            >Remove the job if no ending is possible before this deadline.</span
+          >
+        </div>
+      </div>
+      <br />
+
+      <div class="form-group">
+        <input
+          type="number"
+          name="deadline"
+          class="form-control"
+          placeholder="Enter deadline"
+        />
+      </div>
+
+      <label>Cores per socket</label>
+      <div class="info-icon">
+        <img src="../../static/info.svg" />
+        <div class="job-info-box">
+          <span class="job-info-box-text"
+            >Restrict node selection to nodes with at least the specified number
+            of cores per socket.</span
+          >
+        </div>
+      </div>
+      <br />
+
+      <div class="form-group">
+        <input
+          type="number"
+          name="cores"
+          class="form-control"
+          placeholder="Enter cores per socket"
+        />
+      </div>
+
+      <label>No kill</label>
+      <div class="info-icon">
+        <img src="../../static/info.svg" />
+        <div class="job-info-box">
+          <span class="job-info-box-text"
+            >Do not automatically terminate a job if one of the nodes it has
+            been allocated fails. The user will assume the responsibilities for
+            fault-tolerance should a node fail.</span
+          >
+        </div>
+      </div>
+      <br />
+
+      <span class="flag-span-first">
+        <input type="checkbox" value="" name="no_kill" />
+      </span>
+
+      <br /><br />
+
+      <label>Additional commands</label>
+      <div class="info-icon">
+        <img src="../../static/info.svg" />
+        <div class="job-info-box">
+          <span class="job-info-box-text">Your additional bash commands.</span>
+        </div>
+      </div>
+      <br />
+
+      <div class="form-group">
+        <textarea
+          class="form-control form-control-text-area"
+          placeholder="Please enter additional commands"
+          id="exampleFormControlTextarea1"
+          rows="3"
+          max-rows="8"
+        ></textarea>
+      </div>
+    </ul>
+  </div>
+</div>

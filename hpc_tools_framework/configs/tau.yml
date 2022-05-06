@@ -1,0 +1,345 @@
+#todo fix mpi implementation of mpirun and darshan to run this
+title: 'TAU'
+fulltitle: 'Tuning and Analysis Utilities Performance System'
+url: 'https://www.cs.uoregon.edu/research/tau/home.php'
+name: 'tau'
+description: 'TAU Performance System® is a portable profiling and tracing toolkit for performance analysis of parallel programs written in Fortran, C, C++, UPC, Java, Python. TAU (Tuning and Analysis Utilities) is capable of gathering performance information through instrumentation of functions, methods, basic blocks, and statements as well as event-based sampling.'
+compiler: ~
+job:
+  single_env_variable:
+    - name: 'TAU_MAKEFILE'
+      value: '§home/x86_64/lib/Makefile.tau-papi-openmp-mpi' #maybe not necessary when using spack
+installation:
+  flags:
+    - name: 'mpi'
+      value: 'mpi'
+      prefix: '+'
+      suffix: ~
+
+    - name: 'openmp'
+      value: 'openmp'
+      prefix: '+'
+      suffix: ~
+
+    - name: 'papi'
+      value: 'papi'
+      prefix: '+'
+      suffix: ~
+
+    - name: 'hwloc'
+      value: 'hwloc'
+      prefix: '^'
+      suffix: '@1.11.9' #todo check if bug is still present
+output: ~
+settings :
+
+####instrumentation
+
+  - name: 'compiler_based_instrumentation'
+    type: 'Bool'
+    description: 'Instrument the program with compiler usage'
+    compiler:
+      compiler: 'tau_cc.sh'
+      cflags:
+        - '-tau_options=' #might also need path to TAU makefile
+        - '-optCompInst'
+  - name: 'source_based_instrumentation'
+    type: 'Bool'
+    description: 'Instrument the program with source based instrumentation. This will use PDT.'
+    compiler:
+      compiler: 'tau_cc.sh'
+
+  - name: 'instrumentation_shared_library'
+    type: 'Bool'
+    description: 'Use shared library of TAU.'
+    compiler:
+      compiler: 'tau_cc.sh'
+      cflags:
+        - '-tau_options='
+        - '-optShared'
+
+  - name: 'instrumentation_memory_leaks'
+    type: 'Bool'
+    description: 'Detect memory leaks using instrumentation.'
+    compiler:
+      compiler: 'tau_cc.sh'
+      cflags:
+        - '-tau_options='
+        - '-optDetectMemoryLeaks'
+
+  - name: 'instrumentation_runtime_memory_debug'
+    type: 'Bool'
+    description: 'Enable TAUs runtime memory debugger.'
+    compiler:
+      compiler: 'tau_cc.sh'
+      cflags:
+        - '-tau_options='
+        - '-optMemDbg'
+
+  - name: 'instrumentation_pthread_tracking'
+    type: 'Bool'
+    description: 'Adds tracking of the UPC runtime library.'
+    compiler:
+      compiler: 'tau_cc.sh'
+      cflags:
+        - '-tau_options='
+        - '-optTrackPthread'
+        -
+  - name: 'instrumentation_posix_io'
+    type: 'Bool'
+    description: 'Specify wrapping of POSIX I/O calls at link time.'
+    compiler:
+      compiler: 'tau_cc.sh'
+      cflags:
+        - '-tau_options='
+        - '-optTrackIO'
+
+
+
+  - name: 'instrumentation_io'
+    type: 'Bool'
+    description: 'Track input/output using instrumentation.'
+    compiler:
+      compiler: 'tau_cc.sh'
+      cflags:
+        - '-tau_options=' #check if this might need -- instead of -
+        - '-io'
+
+  - name: 'instrumentation_memory'
+    type: 'Bool'
+    description: 'Track memory using instrumentation.'
+    compiler:
+      compiler: 'tau_cc.sh'
+      cflags:
+        - '-tau_options='
+        - '-memory'
+        -
+  - name: 'instrumentation_outer_loops'
+    type: 'Bool'
+    description: 'Track outer loops using instrumentation.'
+    compiler:
+      compiler: 'tau_cc.sh'
+      cflags:
+        - '-tau_options='
+        - '-loops'
+
+
+
+
+
+  - name: 'selective_profiling_file_shared_library'
+    type: 'File'
+    description: 'TAU allows you to customize the instrumentation of a program by using a selective instrumentation file. This instrumentation file is used to manually control which parts of the application are profiled and how they are profiled. Consider https://www.cs.uoregon.edu/research/tau/docs/newguide/bk01pt01ch01s04.html for help.'
+    compiler:
+      compiler: 'tau_cc.sh'
+    job:
+      single_env_variables:
+        - name: 'TAU_SELECT_FILE'
+          value: '§input'
+
+  - name: 'advanced_mpi_profiling'
+    type: 'Bool'
+    description: 'Enable advanced MPI measurement features to track MPI message statistics when profiling or messages lines when tracing.'
+    compiler:
+      compiler: 'tau_cc.sh'
+    job:
+      single_env_variables:
+        - name: 'TAU_TRACK_MESSAGE'
+          value: 'true'
+
+  - name: 'create_communication_matrix'
+    type: 'Bool'
+    description: 'Generate a communication matrix on an instrumented program.'
+    compiler:
+      compiler: 'tau_cc.sh'
+    job:
+      single_env_variables:
+        - name: 'TAU_COMM_MATRIX '
+          value: 'true'
+
+  - name: 'throttle_based_overhead_reduction_instrumentation_callnumber'
+    type: 'NumberInput'
+    description: 'Reduce the overhead by only keeping track of programs called a certain amount of times. The default rules TAU uses to determine which functions to throttle is: numcalls > 100000 which means that if a function executes more than 100000 times and has an inclusive time per call of less than 10 microseconds, then profiling of that function will be disabled after that threshold is reached.'
+    compiler:
+      compiler: 'tau_cc.sh'
+    job:
+      single_env_variables:
+        - name: 'TAU_THROTTLE_NUMCALLS '
+          value: '§input'
+
+  - name: 'throttle_based_overhead_reduction_instrumentation_percall'
+    type: 'NumberInput'
+    description: 'Reduce the overhead by only keeping track of programs running a certain summed time. The default rules TAU uses to determine which functions to throttle is: numcalls > 100000 which means that if a function executes more than 100000 times and has an inclusive time per call of less than 10 microseconds, then profiling of that function will be disabled after that threshold is reached.'
+    compiler:
+      compiler: 'tau_cc.sh'
+    job:
+      single_env_variables:
+        - name: 'TAU_THROTTLE_PERCALL'
+          value: '§input'
+
+  - name: 'callpath_sampling' #find out if this is possible for sampling (should be)
+    type: 'Bool'
+    description: 'Generate a callpath of the functions using instrumentation.'
+    compiler:
+      compiler: 'tau_cc.sh'
+    job:
+      single_env_variables:
+        - name: 'TAU_CALLPATH'
+          value: 'true'
+
+  - name: 'callpath_depth' #find out if this is possible for sampling (should be)
+    type: 'NumberInput'
+    description: 'Generate a callpath of the functions using instrumentation for a certain depth.'
+    compiler:
+      compiler: 'tau_cc.sh'
+    job:
+      single_env_variables:
+        - name: 'TAU_CALLPATH_DEPTH'
+          value: '§input'
+
+ ##TODO PAPI events 
+    
+
+  - name: 'tracing_instrumentation'
+    type: 'Bool'
+    description: 'Tracing the execution of a parallel program shows when and where an event occurred, in terms of the process that executed it and the location in the source code.'
+    compiler:
+      compiler: 'tau_cc.sh'
+    job:
+      single_env_variables:
+        - name: 'TAU_TRACE'
+          value: 'true'
+
+  - name: 'profiling_instrumentation'
+    type: 'Bool'
+    description: 'Typically, profiling shows the distribution of execution time across routines. It can show the code locations associated with specific bottlenecks, but it can not show the temporal aspect of performance variations. It is implicitly used but can activated here explicitly. Use this setting if you switch back from tracing.'
+    compiler:
+      compiler: 'tau_cc.sh'
+    job:
+      single_env_variables:
+        - name: 'TAU_PROFILE '
+          value: 'true'
+
+  - name: 'profiling_instrumentation'
+    type: 'Bool'
+    description: 'Typically, profiling shows the distribution of execution time across routines. It can show the code locations associated with specific bottlenecks, but it can not show the temporal aspect of performance variations. It is implicitly used but can activated here explicitly. Use this setting if you switch back from tracing.'
+    compiler:
+      compiler: 'tau_cc.sh'
+    job:
+      single_env_variables:
+        - name: 'TAU_PROFILE '
+          value: 'true'
+
+####sampling
+  - name: 'dynamic_instrumentation'
+    type: 'Bool'
+    description: 'Dynamic instrumentation /no recompiling of the program.'
+    job:
+      pre_mpi_command:
+        - 'tau_exec'
+
+  - name: 'io_dynamic_instrumentation'
+    type: 'Bool'
+    description: 'Track IO in dynamic instrumentation.'
+    job:
+      pre_mpi_command:
+        - 'tau_exec'
+        - '-io'
+
+  - name: 'memory_dynamic_instrumentation'
+    type: 'Bool'
+    description: 'Track memory /enable memory debugger in dynamic instrumentation.'
+    job:
+      pre_mpi_command:
+        - 'tau_exec'
+        - '-memory'
+
+  - name: 'cuda_dynamic_instrumentation'
+    type: 'Bool'
+    description: 'Track GPU events via CUDA (Must be configured with -cuda=<dir>, Preferred of CUDA 4.0 or earlier).'
+    job:
+      pre_mpi_command:
+        - 'tau_exec'
+        - '-cuda'
+        -
+  - name: 'cupti_dynamic_instrumentation'
+    type: 'Bool'
+    description: 'Track GPU events via Nvidias CUPTI interface (Must be configured with -cupti=<dir>, Preferred for CUDA 4.1 or later).'
+    job:
+      pre_mpi_command:
+        - 'tau_exec'
+        - '-cupti'
+
+  - name: 'um_dynamic_instrumentation'
+    type: 'Bool'
+    description: 'In conjunction with -cupti adds support for the Unified Memory GPUs. Requires CUDA 6.5 or later.'
+    job:
+      pre_mpi_command:
+        - 'tau_exec'
+        - '-um'
+
+  - name: 'opencl_dynamic_instrumentation'
+    type: 'Bool'
+    description: 'Track GPU events via OpenCL.'
+    job:
+      pre_mpi_command:
+        - 'tau_exec'
+        - '-opencl'
+        -
+  - name: 'openacc_dynamic_instrumentation'
+    type: 'Bool'
+    description: 'Track openacc events. Supports TAU configurations with -arch=craycnl or PGI compilers on x86_64 Linux'
+    job:
+      pre_mpi_command:
+        - 'tau_exec'
+        - '-openacc'
+
+  - name: 'ompt_dynamic_instrumentation'
+    type: 'Bool'
+    description: 'Track OpenMP events via OMPT interface'
+    job:
+      pre_mpi_command:
+        - 'tau_exec'
+        - '-ompt'
+
+  - name: 'power_dynamic_instrumentation'
+    type: 'Bool'
+    description: 'Track power events via PAPIs perf RAPL interface'
+    job:
+      pre_mpi_command:
+        - 'tau_exec'
+        - '-power'
+        -
+  - name: 'numa_dynamic_instrumentation'
+    type: 'Bool'
+    description: 'Activates hardware counters to measure remote DRAM accesses and total node accesses. These counters must be available from PAPI in the selected TAU configuration.'
+    job:
+      pre_mpi_command:
+        - 'tau_exec'
+        - '-numa'
+
+  - name: 'shmen_dynamic_instrumentation'
+    type: 'Bool'
+    description: 'Track SHMEM events.'
+    job:
+      pre_mpi_command:
+        - 'tau_exec'
+        - '-shmem'
+
+  - name: 'serial_dynamic_instrumentation'
+    type: 'Bool'
+    description: 'Track a sequential non multi threaded program.'
+    job:
+      pre_mpi_command:
+        - '-T'
+        - 'serial'
+
+##event based sampling
+
+  - name: 'event_based_sampling'
+    type: 'Bool'
+    description: 'Track SHMEM events.'
+    job:
+      pre_mpi_command:
+        - 'tau_exec'
+        - '-ebs'

@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>HPC Tools Framework</title>
+    <!-- Styles -->
+    <link
+      rel="stylesheet"
+      href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.2/css/bootstrap-select.min.css"
+    />
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='css/index.css') }}"
+    />
+    <!-- Scripts -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.2/js/bootstrap-select.min.js"></script>
+    <!-- Favicon -->
+    <link
+      rel="shortcut icon"
+      href="{{ url_for('static', filename='favicon.ico') }}"
+    />
+  </head>
+  <body>
+    <main class="form-signin">
+      <form action="http://localhost:5000/submit" method="post">
+        <br /><br />
+        <div class="container">
+          <nav class="navbar navbar-default">
+            <div class="container-fluid navbar-main">
+              <div class="navbar-header">
+                <a class="navbar-brand" href="#">HPC Tools Framework </a>
+              </div>
+              <ul class="nav navbar-nav">
+                <li class="active"><a href="home">Home</a></li>
+                <li><a href="jobs">Jobs</a></li>
+              </ul>
+              <a href="login"><img class="logout-icon" src="../static/logout-svgrepo-com.svg" /></a>
+            </div>
+          </nav>
+          <br />
+          <h2 align="center">HPC Tools Framework</h2>
+          <br />
+          <div class="container-fluid">
+            <div class="row">
+              <div class="col-md-6 col-lg-6 col-sm-12 col-xl-6">
+                {% include 'components/tool_configuration.html' %}
+              </div>
+              <div class="col-md-6 col-lg-6 col-sm-12 col-xl-6">
+                {% include 'components/job_configuration.html' %}
+                <br />
+                {% include 'components/program_selection.html' %}
+                <br />
+              </div>
+            </div>
+            <div class="submit-button-block">
+              <input
+                class="w-100 btn btn-lg btn-primary"
+                id="homeButton"
+                type="submit"
+                value="Submit"
+              />
+            </div>
+          </div>
+        </div>
+      </form>
+    </main>
+    <script src="{{ url_for('static', filename='js/index.js') }}"></script>
+  </body>
+</html>

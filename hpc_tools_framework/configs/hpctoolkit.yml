@@ -1,0 +1,215 @@
+#output directory with -o flag : mpirun −np 4 hpcrun −o AUSGABE_VERZEICHNIS_NAME ./partdiff−par−hybrid 1 1 100 1 2 500
+#installation with spack seems to work at the moment but might fail due to libiberty dev
+title: "HCPToolkit"
+fulltitle: "High Performance Computer Toolkit"
+url: "http://hpctoolkit.org/"
+name: "hpctoolkit"
+description: "HPCToolkit is an integrated suite of tools for measurement and analysis of program performance on computers ranging from multicore desktop systems to the nations largest supercomputers."
+installation: #todo maybe as a special setting. spack install hpctoolkit should work as well but this is usefull for middle to big analysis data and usage of graphs in the hpcviewer. When using this you always have to use hpcprof-mpi (-mpi flag) vor analysis. "sudo apt-get install -y libiberty-dev" might have to be done additionally
+  flags:
+    - name: "hpcprof_mpi"
+      value: "mpi"
+      prefix: "+"
+compiler:
+  cflags:
+    - "-g" #todo explicitally delete flags (like -static)
+  compiler_level: "O2"
+job:
+  post_mpi_command:
+    - "hpcrun"
+output: ~
+settings:
+  - name: "sample_realtime"
+    type: "Bool"
+    description: "Sample the programm with realtime sample source. Use only if your porgramm can handle interrupted syscalls"
+    job:
+      post_mpi_command:
+        - "hpcrun"
+        - "-e REALTIME@2000"
+
+  - name: "sample_cpu_time"
+    type: "Bool"
+    description: "Sample the programm with cpu time"
+    job:
+      post_mpi_command:
+        - "hpcrun"
+        - "-e CPUTIME@2000"
+
+  - name: "sample_realtime_sample_rate"
+    type: Numberinput 
+    description: "Sample the programm with realtime sample source and give the sample rate. Use only if your porgramm can handle interrupted syscalls"
+    job:
+      post_mpi_command:
+        - "hpcrun"
+        - "-e REALTIME@§input"
+
+  - name: "sample_cpu_time_sample_rate"
+    type: Numberinput
+    description: "Sample the programm with cpu time on a specific sample rate"
+    job:
+      post_mpi_command:
+        - "hpcrun"
+        - "-e CPUTIME@§input"
+
+  - name: "PAPI_events"
+    type: "Set"
+    description: Get Hardware Performce Counter Events
+    values:
+      - "hpcrun" 
+      - "--event PAPI_L1_DCM"
+      - "--event PAPI_L1_ICM"
+      - "--event PAPI_L2_DCM"
+      - "--event PAPI_L2_ICM"
+      - "--event PAPI_L3_DCM"
+      - "--event PAPI_L3_ICM"
+      - "--event PAPI_L1_TCM"
+      - "--event PAPI_L2_TCM"
+      - "--event PAPI_L3_TCM"
+      - "--event PAPI_CA_SNP"
+      - "--event PAPI_CA_SHR"
+      - "--event PAPI_CA_CLN"
+      - "--event PAPI_CA_INV"
+      - "--event PAPI_CA_ITV"
+      - "--event PAPI_L3_LDM"
+      - "--event PAPI_L3_STM"
+      - "--event PAPI_BRU_IDL"
+      - "--event PAPI_FXU_IDL"
+      - "--event PAPI_FPU_IDL"
+      - "--event PAPI_LSU_IDL"
+      - "--event PAPI_TLB_DM"
+      - "--event PAPI_TLB_IM"
+      - "--event PAPI_TLB_TL"
+      - "--event PAPI_L1_LDM"
+      - "--event PAPI_L1_STM"
+      - "--event PAPI_L2_LDM"
+      - "--event PAPI_L2_STM"
+      - "--event PAPI_BTAC_M"
+      - "--event PAPI_PRF_DM"
+      - "--event PAPI_L3_DCH"
+      - "--event PAPI_TLB_SD"
+      - "--event PAPI_CSR_FAL"
+      - "--event PAPI_CSR_SUC"
+      - "--event PAPI_CSR_TOT"
+      - "--event PAPI_MEM_SCY"
+      - "--event PAPI_MEM_RCY"
+      - "--event PAPI_MEM_WCY"
+      - "--event PAPI_STL_ICY"
+      - "--event PAPI_FUL_ICY"
+      - "--event PAPI_STL_CCY"
+      - "--event PAPI_FUL_CCY"
+      - "--event PAPI_HW_INT"
+      - "--event PAPI_BR_UCN"
+      - "--event PAPI_BR_CN"
+      - "--event PAPI_BR_TKN"
+      - "--event PAPI_BR_MSP"
+      - "--event PAPI_BR_NTK"
+      - "--event PAPI_BR_PRC"
+      - "--event PAPI_FMA_INS"
+      - "--event PAPI_TOT_IIS"
+      - "--event PAPI_TOT_INS"
+      - "--event PAPI_INT_INS"
+      - "--event PAPI_FP_INS"
+      - "--event PAPI_LD_INS"
+      - "--event PAPI_SR_INS"
+      - "--event PAPI_BR_INS"
+      - "--event PAPI_VEC_INS"
+      - "--event PAPI_FLOPS"
+      - "--event PAPI_RES_STL"
+      - "--event PAPI_FP_STAL"
+      - "--event PAPI_TOT_CYC"
+      - "--event PAPI_IPS"
+      - "--event PAPI_LST_INS"
+      - "--event PAPI_SYC_INS"
+      - "--event PAPI_L1_DCH"
+      - "--event PAPI_L2_DCH"
+      - "--event PAPI_L1_DCA"
+      - "--event PAPI_L2_DCA"
+      - "--event PAPI_L3_DCA"
+      - "--event PAPI_L1_DCR"
+      - "--event PAPI_L2_DCR"
+      - "--event PAPI_L3_DCR"
+      - "--event PAPI_L1_DCW"
+      - "--event PAPI_L2_DCW"
+      - "--event PAPI_L3_DCW"
+      - "--event PAPI_L1_ICH"
+      - "--event PAPI_L2_ICH"
+      - "--event PAPI_L3_ICH"
+      - "--event PAPI_L1_ICA"
+      - "--event PAPI_L2_ICA"
+      - "--event PAPI_L3_ICA"
+      - "--event PAPI_L1_ICR"
+      - "--event PAPI_L2_ICR"
+      - "--event PAPI_L3_ICR"
+      - "--event PAPI_L1_ICW"
+      - "--event PAPI_L2_ICW"
+      - "--event PAPI_L3_ICW"
+      - "--event PAPI_L1_TCH"
+      - "--event PAPI_L2_TCH"
+      - "--event PAPI_L3_TCH"
+      - "--event PAPI_L1_TCA"
+      - "--event PAPI_L2_TCA"
+      - "--event PAPI_L3_TCA"
+      - "--event PAPI_L1_TCR"
+      - "--event PAPI_L2_TCR"
+      - "--event PAPI_L3_TCR"
+      - "--event PAPI_L1_TCW"
+      - "--event PAPI_L2_TCW"
+      - "--event PAPI_L3_TCW"
+      - "--event PAPI_FML_INS"
+      - "--event PAPI_FAD_INS"
+      - "--event PAPI_FDV_INS"
+      - "--event PAPI_FSQ_INS"
+      - "--event PAPI_FNV_INS"
+    job:
+      post_mpi_command:
+        - §set[ ]
+
+  - name: "input_ouput "
+    type: "Bool"
+    description: "Get bytes written on disk and read from disk"
+    job:
+      post_mpi_command:
+        - "hpcrun"
+        - "--event IO"
+  - name: "memory_leaks"
+    type: "Bool"
+    description: "See memory leaks"
+    job:
+      post_mpi_command:
+        - "hpcrun"
+        - "-e MEMLEAK"
+
+  - name: "tracing"
+    type: "Bool"
+    description: "Trace the programm"
+    job:
+      post_mpi_command:
+        - "hpcrun"
+        - "-t"
+  - name: "trace_fraction"
+    type: "Numberinput" #'float' but does not work
+    description: "Trace only fraction of the processes"
+    job:
+      post_mpi_command:
+        - "hpcrun"
+        - "-t"
+        - "-f §input" #number between 0 and 1 which gives the relative amount of processes to trace
+
+  - name: "API"
+    type: "Bool"
+    description: "Enable the usage of the HPCToolkit API. The API commands must be included already"
+    compiler:
+      cflags:
+        - "-g"
+        - "-fomit-frame-pointer"
+      libs:
+        - "-lhpctoolkit"
+      compiler_level: "O2"
+      include_link: "§home/include"
+      library_link: "§home/lib/hpctoolkit"
+    job:
+      single_env_variables:
+        - name: "LD_LIBRARY_PATH"
+          value: "§home/lib/hpctoolkit"
+      post_mpi_command:
+        - "hpcrun"

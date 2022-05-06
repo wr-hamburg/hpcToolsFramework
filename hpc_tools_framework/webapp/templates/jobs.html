@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>HPC Tools Framework</title>
+    <!-- Styles -->
+    <link
+      rel="stylesheet"
+      href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.2/css/bootstrap-select.min.css"
+    />
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='css/jobs.css') }}"
+    />
+    <!-- Scripts -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.2/js/bootstrap-select.min.js"></script>
+    <!-- Favicon -->
+    <link
+      rel="shortcut icon"
+      href="{{ url_for('static', filename='favicon.ico') }}"
+    />
+  </head>
+  <body onload="javascript:getJobs()">
+    <main class="form-signin">
+      <form action="http://localhost:5000/download" method="post">
+        <br /><br />
+        <div class="container">
+          <nav class="navbar navbar-default">
+            <div class="container-fluid">
+              <div class="navbar-header">
+                <a class="navbar-brand" href="home">HPC Tools Framework </a>
+              </div>
+              <ul class="nav navbar-nav">
+                <li><a href="home">Home</a></li>
+                <li class="active"><a href="jobs">Jobs</a></li>
+              </ul>
+              <a href="login"><img class="logout-icon" src="../static/logout-svgrepo-com.svg" /></a>
+            </div> 
+          </nav>
+          <br />
+          <h2 align="center">Jobs</h2>
+          <br />
+          <div class="container-fluid">
+            <div class="row">
+              <div
+                class="col-md-12 col-lg-12 col-sm-12 col-xl-12 main-job-block"
+              >  <div class="list-group-jobs-item">
+                <span class="list-group-jobs-subitem list-group-jobs-subitem-header">Name</span>
+                <span class="list-group-jobs-subitem list-group-jobs-subitem-header" >Tool</span>
+                <span class="list-group-jobs-subitem list-group-jobs-subitem-header" >Setting</span>
+                <span class="list-group-jobs-subitem list-group-jobs-subitem-header" >State</span>
+                <span class="list-group-jobs-subitem list-group-jobs-subitem-header" >Starttime</span>
+                <span class="list-group-jobs-subitem list-group-jobs-subitem-header" > Duration</span>
+                <a href="#" class='a-list-group-jobs-subitem-download-not-visible' ><span class="list-group-jobs-subitem" > <img class='list-group-jobs-subitem-download-not-visible' src="../../static/download.png" /></span></a>
+              </div>
+                <div id="myData">
+                </div>
+              </div>
+            </div>
+            <div id="loading_jobs" class="multi-ripple">
+              <div></div>
+              <div></div>
+            </div>
+          </div>
+        </div>
+      </form>
+    </main>
+    <script src="{{ url_for('static', filename='js/index.js') }}"></script>
+    <script>
+      
+
+  function removeLoader(){
+      // fadeOut complete. Remove the loading div
+      $( "#loading_jobs" ).remove(); //makes page more lightweight 
+}
+
+function showLoader(){
+      // fadeOut complete. Remove the loading div
+      $( "#loading_jobs" ).show(); //makes page more lightweight 
+}
+
+      function getJobs() {
+        showLoader();
+       fetch('/jobs/list')
+   .then(response => {
+       if (!response.ok) {
+           throw new Error("HTTP error " + response.status);
+       }
+       return response.json();
+   })
+   .then(function (data) {
+                removeLoader();
+                appendData(data);
+            })
+   .catch(function () {
+       this.dataError = true;
+   })
+    }
+
+    function appendData(data) {
+    var mainContainer = document.getElementById("myData");
+    var div = document.createElement("div");
+    div.classList.add("list-group-jobs-main-item")
+    let devs = data;
+    const stringA = devs.map(dev => `<div class="list-group-jobs-item">
+    <span class="list-group-jobs-subitem">${dev.name}</span>
+    <span class="list-group-jobs-subitem">${dev.tool}</span>
+    <span class="list-group-jobs-subitem">${dev.setting}</span>
+    <span class="list-group-jobs-subitem">${dev.state}</span>
+    <span class="list-group-jobs-subitem">${dev.starttime}</span>
+    <span class="list-group-jobs-subitem">${dev.duration}</span>
+    ${dev.state == 'finished' ? '<a href="#" class="lala a-list-group-jobs-subitem-download-not-visible-none"><span class="list-group-jobs-subitem" > <img class="list-group-jobs-subitem-download" src="../../static/download.png" /></span></a>' : '<a href="#" class="lala a-list-group-jobs-subitem-download-not-visible"><span class="list-group-jobs-subitem" > <img class="list-group-jobs-subitem-download" src="../../static/download.png" /></span></a>'}
+    </div>`).join("");
+    div.innerHTML = div.innerHTML + stringA;
+
+    mainContainer.appendChild(div);
+  }
+</script>
+  </body>
+</html>

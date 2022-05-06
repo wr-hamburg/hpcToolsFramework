@@ -1,0 +1,21 @@
+title: 'Perf'
+fulltitle: 'Perf_events'
+url: 'https://www.kernel.org/doc/html/latest/admin-guide/perf-security.html' #change
+name: 'perf' #not with spack already installed
+description: 'Perf began as a tool for using the performance counters subsystem in Linux, and has had various enhancements to add tracing capabilities. Performance counters are CPU hardware registers that count hardware events such as instructions executed, cache-misses suffered, or branches mispredicted.'
+compiler: ~
+job: ~
+installation: ~
+output: ~
+settings :
+  - name: 'flamegraph_analysis'
+    type: 'Bool'
+    description: 'Generate a flamegraph of your program'
+    job:
+      pre_mpi_command:
+        - 'time perf'
+        - 'record'
+        - '-g'
+
+#open for example as flamgegraph with: perf script | ./ stackcollapse−perf.pl > out.perf−AUSGABENAME
+#./flamegraph.pl out.perf−AUSGABENAME > AUSGABEBILDNAME.svg

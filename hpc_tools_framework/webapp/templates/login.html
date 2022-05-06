@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Login HPC Tools Framework</title>
+
+    <!-- Styles -->
+    <link
+      rel="stylesheet"
+      href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css"
+    />
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='css/login.css') }}"
+    />
+
+    <!-- Favicon -->
+    <link
+      rel="shortcut icon"
+      href="{{ url_for('static', filename='favicon.ico') }}"
+    />
+  </head>
+
+  <body class="text-center">
+    <main class="form-signin">
+      <form id="form_login_main" action="http://localhost:5000/login" method="post">
+        <h1 class="h3 mb-3 fw-normal">Log into your cluster</h1>
+        <div class="form-floating">
+          <label for="floatingInput">Cluster name</label>
+          <input
+            type="text"
+            class="form-control"
+            id="floatingInput"
+            name="cluster_name"
+            placeholder="Cluster"
+          />
+        </div>
+        <div class="form-floating">
+          <label for="floatingInput">Username</label>
+          <input
+            type="text"
+            class="form-control"
+            id="floatingInput"
+            name="username"
+            placeholder="Username"
+          />
+        </div>
+        <div class="form-floating">
+          <label for="floatingPassword">Password</label>
+          <input
+            type="password"
+            class="form-control"
+            id="floatingPassword"
+            name="password"
+            placeholder="Password"
+          />
+        </div>
+        <br />
+        <input
+          class="w-100 btn btn-lg btn-primary"
+          id="homeButton"
+          type="submit"
+          value="Login"
+          onclick="checkLogin()"
+        />
+        <div id="loading_login" class="multi-ripple" hidden>
+          <div></div>
+          <div></div>
+        </div>
+      </form>
+    </main>
+    <script>
+      function checkLogin() {
+        document.getElementById("loading_login").style.display = "block";
+      }
+    </script>
+  </body>
+</html>

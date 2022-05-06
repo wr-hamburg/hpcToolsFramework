@@ -1,0 +1,402 @@
+#todo cuda and opencl
+title: "Score-P"
+fulltitle: "Scalable Performance Measurement Infrastructure for Parallel Codes"
+url: "https://www.vi-hps.org/projects/score-p"
+name: "scorep"
+description: "The Score-P measurement infrastructure is a highly scalable and easy-to-use tool suite for profiling and event tracing of HPC applications."
+compiler:
+  compiler: "scorep mpicc"
+job:
+  single_env_variables:
+    - name: "SCOREP_EXPERIMENT_DIRECTORY"
+      value: "§output"
+installation: ~
+output: ~
+
+settings:
+  - name: "tracing"
+    type: "Bool"
+    description: "Activate Tracing"
+    job:
+      single_env_variables:
+        - name: "SCOREP_ENABLE_TRACING"
+          value: true
+        - name: "SCOREP_ENABLE_PROFILING"
+          value: false
+  - name: "profiling"
+    type: "Bool"
+    description: "Activate Profiling"
+    job:
+      single_env_variables:
+        - name: "SCOREP_ENABLE_TRACING"
+          value: false
+        - name: "SCOREP_ENABLE_PROFILING"
+          value: true
+
+  - name: "sampling"
+    type: "Bool"
+    description: "Use sampling instead of instrumentation"
+    job:
+      single_env_variables:
+        - name: "SCOREP_ENABLE_TRACING"
+          value: false
+        - name: "SCOREP_ENABLE_UNWINDING"
+          value: true
+      listed_env_variables:
+        - name: "SCOREP_SAMPLING_EVENTS"
+          values:
+            - "PAPI_TOT_CYC"
+            - "dummy" #continue
+
+  - name: "noCompiler"
+    type: "Bool"
+    description: "Dont use compiler based instrumentation"
+    compiler:
+      compiler: "scorep --nocompiler mpicc"
+  - name: "pdtInstrumentation"
+    type: "Bool"
+    description: "Use PDToolkit for instrumentation"
+    compiler:
+      compiler: "scorep --pdt mpicc"
+
+  - name: "API"
+    type: "Bool"
+    description: "Take user regions from API into account. The API has to be used beforehand."
+    compiler:
+      compiler: "scorep –-user mpicc"
+
+  - name: "filter"
+    type: "File"
+    description: "Use specified filter file"
+    job:
+      single_env_variable:
+        - name: "SCOREP_FILTERING_FILE"
+        - value: "§input"
+
+  - name: "selective_recording"
+    type: "File" 
+    description: "Use selective recording through a file"
+    job:
+      single_env_variable:
+        - name: "SCOREP_SELECTIVE_CONFIG_FILE"
+        - value: "§input"
+
+  - name: "papi_events"
+    type: "Set"
+    description: "Read events from the Hardware Performance Counter through PAPI"
+    values:
+      - "PAPI_L1_DCM"
+      - "PAPI_L1_ICM"
+      - "PAPI_L2_DCM"
+      - "PAPI_L2_ICM"
+      - "PAPI_L3_DCM"
+      - "PAPI_L3_ICM"
+      - "PAPI_L1_TCM"
+      - "PAPI_L2_TCM"
+      - "PAPI_L3_TCM"
+      - "PAPI_CA_SNP"
+      - "PAPI_CA_SHR"
+      - "PAPI_CA_CLN"
+      - "PAPI_CA_INV"
+      - "PAPI_CA_ITV"
+      - "PAPI_L3_LDM"
+      - "PAPI_L3_STM"
+      - "PAPI_BRU_IDL"
+      - "PAPI_FXU_IDL"
+      - "PAPI_FPU_IDL"
+      - "PAPI_LSU_IDL"
+      - "PAPI_TLB_DM"
+      - "PAPI_TLB_IM"
+      - "PAPI_TLB_TL"
+      - "PAPI_L1_LDM"
+      - "PAPI_L1_STM"
+      - "PAPI_L2_LDM"
+      - "PAPI_L2_STM"
+      - "PAPI_BTAC_M"
+      - "PAPI_PRF_DM"
+      - "PAPI_L3_DCH"
+      - "PAPI_TLB_SD"
+      - "PAPI_CSR_FAL"
+      - "PAPI_CSR_SUC"
+      - "PAPI_CSR_TOT"
+      - "PAPI_MEM_SCY"
+      - "PAPI_MEM_RCY"
+      - "PAPI_MEM_WCY"
+      - "PAPI_STL_ICY"
+      - "PAPI_FUL_ICY"
+      - "PAPI_STL_CCY"
+      - "PAPI_FUL_CCY"
+      - "PAPI_HW_INT"
+      - "PAPI_BR_UCN"
+      - "PAPI_BR_CN"
+      - "PAPI_BR_TKN"
+      - "PAPI_BR_MSP"
+      - "PAPI_BR_NTK"
+      - "PAPI_BR_PRC"
+      - "PAPI_FMA_INS"
+      - "PAPI_TOT_IIS"
+      - "PAPI_TOT_INS"
+      - "PAPI_INT_INS"
+      - "PAPI_FP_INS"
+      - "PAPI_LD_INS"
+      - "PAPI_SR_INS"
+      - "PAPI_BR_INS"
+      - "PAPI_VEC_INS"
+      - "PAPI_FLOPS"
+      - "PAPI_RES_STL"
+      - "PAPI_FP_STAL"
+      - "PAPI_TOT_CYC"
+      - "PAPI_IPS"
+      - "PAPI_LST_INS"
+      - "PAPI_SYC_INS"
+      - "PAPI_L1_DCH"
+      - "PAPI_L2_DCH"
+      - "PAPI_L1_DCA"
+      - "PAPI_L2_DCA"
+      - "PAPI_L3_DCA"
+      - "PAPI_L1_DCR"
+      - "PAPI_L2_DCR"
+      - "PAPI_L3_DCR"
+      - "PAPI_L1_DCW"
+      - "PAPI_L2_DCW"
+      - "PAPI_L3_DCW"
+      - "PAPI_L1_ICH"
+      - "PAPI_L2_ICH"
+      - "PAPI_L3_ICH"
+      - "PAPI_L1_ICA"
+      - "PAPI_L2_ICA"
+      - "PAPI_L3_ICA"
+      - "PAPI_L1_ICR"
+      - "PAPI_L2_ICR"
+      - "PAPI_L3_ICR"
+      - "PAPI_L1_ICW"
+      - "PAPI_L2_ICW"
+      - "PAPI_L3_ICW"
+      - "PAPI_L1_TCH"
+      - "PAPI_L2_TCH"
+      - "PAPI_L3_TCH"
+      - "PAPI_L1_TCA"
+      - "PAPI_L2_TCA"
+      - "PAPI_L3_TCA"
+      - "PAPI_L1_TCR"
+      - "PAPI_L2_TCR"
+      - "PAPI_L3_TCR"
+      - "PAPI_L1_TCW"
+      - "PAPI_L2_TCW"
+      - "PAPI_L3_TCW"
+      - "PAPI_FML_INS"
+      - "PAPI_FAD_INS"
+      - "PAPI_FDV_INS"
+      - "PAPI_FSQ_INS"
+      - "PAPI_FNV_INS"
+    job:
+      listed_env_variables:
+        - name: "SCOREP_METRIC_PAPI"
+          values:
+            - §set[,]
+
+  - name: "papi_events_per_process"
+    type: "set"
+    description: "Read events from the Hardware Performance Counter through PAPI for only the first thread of a process"
+    values:
+      - "PAPI_L1_DCM"
+      - "PAPI_L1_ICM"
+      - "PAPI_L2_DCM"
+      - "PAPI_L2_ICM"
+      - "PAPI_L3_DCM"
+      - "PAPI_L3_ICM"
+      - "PAPI_L1_TCM"
+      - "PAPI_L2_TCM"
+      - "PAPI_L3_TCM"
+      - "PAPI_CA_SNP"
+      - "PAPI_CA_SHR"
+      - "PAPI_CA_CLN"
+      - "PAPI_CA_INV"
+      - "PAPI_CA_ITV"
+      - "PAPI_L3_LDM"
+      - "PAPI_L3_STM"
+      - "PAPI_BRU_IDL"
+      - "PAPI_FXU_IDL"
+      - "PAPI_FPU_IDL"
+      - "PAPI_LSU_IDL"
+      - "PAPI_TLB_DM"
+      - "PAPI_TLB_IM"
+      - "PAPI_TLB_TL"
+      - "PAPI_L1_LDM"
+      - "PAPI_L1_STM"
+      - "PAPI_L2_LDM"
+      - "PAPI_L2_STM"
+      - "PAPI_BTAC_M"
+      - "PAPI_PRF_DM"
+      - "PAPI_L3_DCH"
+      - "PAPI_TLB_SD"
+      - "PAPI_CSR_FAL"
+      - "PAPI_CSR_SUC"
+      - "PAPI_CSR_TOT"
+      - "PAPI_MEM_SCY"
+      - "PAPI_MEM_RCY"
+      - "PAPI_MEM_WCY"
+      - "PAPI_STL_ICY"
+      - "PAPI_FUL_ICY"
+      - "PAPI_STL_CCY"
+      - "PAPI_FUL_CCY"
+      - "PAPI_HW_INT"
+      - "PAPI_BR_UCN"
+      - "PAPI_BR_CN"
+      - "PAPI_BR_TKN"
+      - "PAPI_BR_MSP"
+      - "PAPI_BR_NTK"
+      - "PAPI_BR_PRC"
+      - "PAPI_FMA_INS"
+      - "PAPI_TOT_IIS"
+      - "PAPI_TOT_INS"
+      - "PAPI_INT_INS"
+      - "PAPI_FP_INS"
+      - "PAPI_LD_INS"
+      - "PAPI_SR_INS"
+      - "PAPI_BR_INS"
+      - "PAPI_VEC_INS"
+      - "PAPI_FLOPS"
+      - "PAPI_RES_STL"
+      - "PAPI_FP_STAL"
+      - "PAPI_TOT_CYC"
+      - "PAPI_IPS"
+      - "PAPI_LST_INS"
+      - "PAPI_SYC_INS"
+      - "PAPI_L1_DCH"
+      - "PAPI_L2_DCH"
+      - "PAPI_L1_DCA"
+      - "PAPI_L2_DCA"
+      - "PAPI_L3_DCA"
+      - "PAPI_L1_DCR"
+      - "PAPI_L2_DCR"
+      - "PAPI_L3_DCR"
+      - "PAPI_L1_DCW"
+      - "PAPI_L2_DCW"
+      - "PAPI_L3_DCW"
+      - "PAPI_L1_ICH"
+      - "PAPI_L2_ICH"
+      - "PAPI_L3_ICH"
+      - "PAPI_L1_ICA"
+      - "PAPI_L2_ICA"
+      - "PAPI_L3_ICA"
+      - "PAPI_L1_ICR"
+      - "PAPI_L2_ICR"
+      - "PAPI_L3_ICR"
+      - "PAPI_L1_ICW"
+      - "PAPI_L2_ICW"
+      - "PAPI_L3_ICW"
+      - "PAPI_L1_TCH"
+      - "PAPI_L2_TCH"
+      - "PAPI_L3_TCH"
+      - "PAPI_L1_TCA"
+      - "PAPI_L2_TCA"
+      - "PAPI_L3_TCA"
+      - "PAPI_L1_TCR"
+      - "PAPI_L2_TCR"
+      - "PAPI_L3_TCR"
+      - "PAPI_L1_TCW"
+      - "PAPI_L2_TCW"
+      - "PAPI_L3_TCW"
+      - "PAPI_FML_INS"
+      - "PAPI_FAD_INS"
+      - "PAPI_FDV_INS"
+      - "PAPI_FSQ_INS"
+      - "PAPI_FNV_INS"
+    job:
+      listed_env_variables:
+        - name: "SCOREP_METRIC_PAPI_PER_PROCESS"
+          values: "§set[,]"
+
+  - name: "perf_events"
+    type: "Set"
+    description: "Read events from the Hardware Performance Counter through Linux perf"
+    values:
+      - "cpu-cycles"
+      - "LLC-load-misses"
+      - "dummy" #todo use perf list to see all
+    job:
+      listed_env_variables:
+        - name: "SCOREP_METRIC_PERF"
+          values:
+            - §set[,]
+
+  - name: "resource_usage_events"
+    type: "Set"
+    description: "These metrics use the Unix system call get rusage to provide information about consumed resources and operating system events such as user/system time, received signals, and number of page faults."
+    values:
+      - "ru_utime"
+      - "ru_stime"
+    job:
+      listed_env_variables:
+        - name: "SCOREP_METRIC_RUSAGE"
+          values:
+            - §set[,]
+          separator: ","
+
+  - name: "mpi_groups"
+    type: "Set"
+    description: "The general Score-P filtering mechanism is not applied to MPI functions. Instead, the user can decide whether event generation is turned on or off for a group of MPI functions, at start time of the application."
+    values:
+      - "all"
+      - "cg"
+      - "coll"
+      - "default"
+      - "env"
+      - "err"
+      - "ext"
+      - "io"
+      - "p2p"
+      - "misc"
+      - "perf"
+      - "rma"
+      - "spawn"
+      - "topo"
+      - "type"
+      - "xnonblock"
+      - "xreqtest"
+      - "none"
+    job:
+      listed_env_variables:
+        - name: "SCOREP_MPI_ENABLE_GROUPS"
+          values:
+            - §set[,]
+          separator: ","
+
+  - name: "callpath_depth"
+    type: "NumberInput" 
+    description: "Change the depth of the maximal callpath"
+    job:
+      single_env_variable:
+        - name: "SCOREP_PROFILING_MAX_CALLPATH_DEPTH"
+        - value: "§input"
+
+  - name: "clustering"
+    type: "Bool"
+    description: "Enable/disable clustering of the call trees"
+    job:
+      single_env_variable:
+        - name: "SCOREP_PROFILING_ENABLE_CLUSTERING"
+        - value: "true"
+
+  - name: "Cluster regions"
+    type: "Bool"
+    description: "Enable/disable clustering for a specific region defined in the API"
+    compiler:
+      compiler: "scorep –-user mpicc"
+    job:
+      single_env_variable:
+        - name: "SCOREP_PROFILING_CLUSTERED_REGION"
+        - value: "true"
+#  - name: 'scorep_score'
+#    type: 'bool' #'list[file]'
+#    description: 'See the effects of your filter file on a specified profiling result'
+#    output:
+#      type: 'jobscript_output'
+#    job:
+#      post_mpi_command: #do not inlcude any binary, maybe out of the scopre of this project
+#        - 'scorep-score'
+#        - '§input1'
+#        - '-f'
+#        - '§input2'
+

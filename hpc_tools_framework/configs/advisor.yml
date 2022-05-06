@@ -1,0 +1,25 @@
+title: 'Intel Advisor'
+fulltitle: 'Intel Advisor'
+url: 'https://www.intel.com/content/www/us/en/developer/tools/oneapi/advisor.html#gs.nxgstl'
+name:  'intel-parallel-studio'
+description: 'Intel Advisor is a design and analysis tool for developing performant code. The tool supports C, C++, Fortran, SYCL, OpenMP, OpenCL code, and Python.'
+compiler:
+  libs:
+    - 'ldl'
+  include_link: '§home/sdk/include '
+  library_link: '§home/sdk/lib§system'
+installation:
+  version: '1.1.1'
+  flags:
+    - name: 'Advisor'
+      value: 'advisor'
+      prefix: '+'
+    - name: 'MPI' #might install own Intel MPI implementation and wont work if not used  https://software.intel.com/content/www/us/en/develop/documentation/get-started-with-advisor/top.html
+      value: 'mpi'
+      prefix: '-'
+#pre use cd PFAD/ZUM/VERZEICHNIS/intel/oneapi/advisor/VERSION/; source ./advisor-vars.sh but might only apply when installing manually
+output: ~
+settings :
+  - name: ~
+    type: 'Bool'
+    description: ~
